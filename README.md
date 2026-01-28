@@ -1,75 +1,87 @@
-🔗 MC-Discord-Link
-Open-Source Minecraft ↔ Discord Account & Rank Sync
-<p align="center"> <b>Link accounts once. Sync ranks automatically.</b><br> A free and open-source system to link Minecraft accounts with Discord<br> and automatically assign Discord roles based on in-game ranks. </p> <p align="center"> <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white"> <img src="https://img.shields.io/badge/Discord.py-2.x-5865F2?logo=discord&logoColor=white"> <img src="https://img.shields.io/badge/Minecraft-Paper%20%7C%20Spigot-green"> <img src="https://img.shields.io/badge/Database-SQLite%20%7C%20MySQL-blue"> <img src="https://img.shields.io/github/license/your-username/mc-discord-link"> </p>
-🌍 About
+<!-- ===================================== -->
+<!-- 🔗 MC ↔ DISCORD LINK & RANK SYNC -->
+<!-- ===================================== -->
 
-MC-Discord-Link is a lightweight system that connects a player’s Minecraft account to their Discord account and keeps their ranks in sync.
+<h1 align="center">🔗 MC Discord Link</h1>
 
-Once linked:
+<h3 align="center">
+Link Minecraft accounts with Discord<br>
+and sync ranks automatically
+</h3>
 
-Discord roles are assigned automatically
+<p align="center">
+<b>Free • Open-Source • Server-Agnostic</b>
+</p>
 
-Staff don’t need to manage roles manually
+<p align="center">
+  <img src="https://img.shields.io/badge/Minecraft-Spigot%20%7C%20Paper-green">
+  <img src="https://img.shields.io/badge/Discord.py-2.x-5865F2?logo=discord&logoColor=white">
+  <img src="https://img.shields.io/badge/Database-SQLite%20%7C%20MySQL-blue">
+  <img src="https://img.shields.io/badge/License-MIT-black">
+</p>
 
-Rank verification becomes fast and reliable
+---
 
-This project is 100% free, open-source, and designed to work with any Minecraft server.
+## 🌍 What Is This?
 
-⚙️ How It Works (Simple Version)
+**MC Discord Link** is a lightweight system that connects a player’s **Minecraft account** with their **Discord account** and automatically assigns Discord roles based on their **in-game rank**.
 
-Player runs a command in Minecraft → receives a link code
+No panels.  
+No bloated frameworks.  
+Just clean linking + rank sync.
 
-Player runs /link <code> in Discord
+Designed for **any Minecraft server**.
 
-Bot verifies the code using the database
+---
 
-Minecraft UUID ↔ Discord ID is stored
+## ⚔️ What It Does
 
-Discord role is assigned based on the player’s in-game rank
+✔ Link Minecraft ↔ Discord accounts  
+✔ Generate secure one-time link codes  
+✔ Sync LuckPerms ranks to Discord roles  
+✔ Auto-assign roles on `/link`  
+✔ Supports SQLite (local)  
+✔ Supports MySQL / MariaDB (production)  
 
-That’s it.
-No web panel. No bloated dependencies.
+---
 
-🧩 Features
+## ⚙️ How It Works (Simple)
 
-✅ Minecraft ↔ Discord account linking
-✅ Automatic Discord role assignment
-✅ Supports LuckPerms ranks
-✅ SQLite support (local testing)
-✅ MySQL / MariaDB support (production)
-✅ Works across different hostings
-✅ Fully open-source & customizable
+1. Player runs a command in Minecraft  
+2. Server generates a **6-digit code**  
+3. Player runs `/link <code>` in Discord  
+4. Bot verifies the code via database  
+5. Discord role is assigned automatically  
 
-📁 Project Structure
-mc-discord-link/
-├── discord-bot/
-│   ├── bot.py
-│   ├── database.py
-│   ├── config.py
-│   └── requirements.txt
-│
-├── minecraft-plugin/
-│   ├── src/
-│   └── plugin.yml
-│
-└── link.db   # SQLite (local only)
+That’s it.  
+No staff intervention needed.
 
-🗃️ Database Configuration
-🟢 SQLite (Default – Local Use)
+---
 
-By default, the system uses SQLite:
+## 🧩 System Overview
 
+Minecraft Plugin ───┐
+├── Database (SQLite / MySQL)
+Discord Bot ───┘
+
+
+Both the **plugin** and the **bot** read from the same database.
+
+---
+
+## 🗃️ Database Setup
+
+### 🟢 SQLite (Default – Local Testing)
+
+SQLite works **only if the bot and server are on the same machine**.
+
+```python ```
 DB_PATH = "/path/to/link.db"
-
-
-✅ Easy setup
-❌ Bot and Minecraft server must be on the same machine
+✅ Easy
+❌ Not suitable for shared hosting
 
 🔵 MySQL / MariaDB (Recommended)
-
-If your Discord bot and Minecraft server are hosted separately, you must use MySQL or MariaDB.
-
-Replace SQLite with:
+If your Minecraft server and bot are hosted separately, you must use MySQL or MariaDB.
 
 DB_CONFIG = {
     "host": "DB_HOST",
@@ -78,12 +90,9 @@ DB_CONFIG = {
     "database": "DB_NAME",
     "port": 3306
 }
-
-
-Both the bot and the plugin must use the same database.
+Both services must use the same database credentials.
 
 🤖 Discord Bot Setup
-
 Create a bot in Discord Developer Portal
 
 Enable:
@@ -99,61 +108,55 @@ Manage Roles
 Install dependencies:
 
 pip install -r requirements.txt
-
-
-Start the bot:
+Run the bot:
 
 python bot.py
-
-
-⚠️ Important:
+⚠️ IMPORTANT
 The bot’s role must be higher than the roles it assigns.
 
 ⛏️ Minecraft Plugin Setup
-
 Build or download the plugin JAR
 
-Put it inside:
+Place it inside:
 
 /plugins
-
-
-Configure the database
+Configure database settings
 
 Restart the server
 
-🚨 Common Issues
+🚨 Common Problems & Fixes
 ❌ 403 Forbidden: Missing Permissions
-
 Bot role is below the target role
 
 Bot lacks Manage Roles
 
-❌ Linking fails
+❌ Role not assigned
+Rank name doesn’t match role name
 
-Bot and plugin using different databases
-
-Wrong DB credentials
+Database mismatch between bot & server
 
 ❌ SQLite not syncing
-
-Bot and server are on different machines (expected)
+Bot and server are on different machines
+→ Use MySQL instead
 
 🧠 Customization
+You can easily:
 
-You can:
+Map Minecraft ranks → Discord roles
 
-Map ranks to custom Discord roles
-
-Extend commands
+Change commands
 
 Add logging
 
-Switch databases anytime
+Extend verification logic
 
-The code is intentionally kept simple so servers can modify it easily.
+The code is intentionally simple and readable.
 
 📜 License
-
 MIT License
-Free to use, modify, and distribute.
+
+Free to use.
+Free to modify.
+Free to redistribute.
+
+<p align="center"> <b>Built for the community.</b><br> If one server didn’t want it, others will. </p> ```
